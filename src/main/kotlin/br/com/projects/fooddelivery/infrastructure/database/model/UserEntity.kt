@@ -1,5 +1,6 @@
 package br.com.projects.fooddelivery.infrastructure.database.model
 
+import br.com.projects.fooddelivery.domain.entities.User
 import br.com.projects.fooddelivery.infrastructure.enums.UserType
 import jakarta.persistence.*
 import java.util.*
@@ -27,4 +28,16 @@ class UserEntity(
     @Column
     val type: UserType,
 ) {
+
+    fun toDomain(): User {
+        return User(
+            UUID.fromString(id),
+            name,
+            secondName,
+            email,
+            password,
+            type
+        );
+    }
+
 }

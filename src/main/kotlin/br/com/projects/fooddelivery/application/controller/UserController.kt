@@ -24,7 +24,7 @@ class UserController(
 
     @GetMapping("/{id}")
     fun create(@PathVariable id: String): ResponseEntity<UserResponse> {
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(userService.findById(id));
     }
 
 }

@@ -26,4 +26,9 @@ class UserService(
 
         return user.toResponse();
     }
+
+    fun findById(id: String): UserResponse {
+        val entity = userRepository.findById(id).orElseThrow { IllegalArgumentException("User not found") };
+        return entity.toDomain().toResponse();
+    }
 }
