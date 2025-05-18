@@ -1,0 +1,18 @@
+version: "3.0"
+
+services:
+  oracledb:
+    image: gvenzl/oracle-xe:21.3.0-slim
+    container_name: oracledb
+    ports:
+      - "1521:1521"
+    environment:
+      ORACLE_PASSWORD: admin
+      APP_USER: admin
+      APP_USER_PASSWORD: admin
+    volumes:
+      - oracle_data:/opt/oracle/oradata
+    restart: unless-stopped
+
+volumes:
+  oracle_data:
