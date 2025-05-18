@@ -23,7 +23,7 @@ class UserService(
 
         val entity = userRepository.save(user.toModel());
 
-        user.addIdentifier(UUID.fromString(entity.id));
+        entity.id?.let { user.addIdentifier(it) };
 
         return user.toResponse();
     }

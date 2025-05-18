@@ -12,7 +12,7 @@ class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column
-    val id: String?,
+    val id: UUID?,
 
     @Column
     var name: String,
@@ -48,7 +48,7 @@ class UserEntity(
 
     fun toDomain(): User {
         return User(
-            UUID.fromString(id),
+            UUID.fromString(id.toString()),
             name,
             secondName,
             email,
