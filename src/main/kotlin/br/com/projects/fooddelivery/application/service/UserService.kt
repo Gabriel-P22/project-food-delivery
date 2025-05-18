@@ -3,13 +3,14 @@ package br.com.projects.fooddelivery.application.service
 import br.com.projects.fooddelivery.application.dto.UserRequest
 import br.com.projects.fooddelivery.application.dto.UserResponse
 import br.com.projects.fooddelivery.domain.entities.User
+import br.com.projects.fooddelivery.infrastructure.database.model.UserEntity
 import br.com.projects.fooddelivery.infrastructure.database.repository.UserRepository
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
 class UserService(
-    val userRepository: UserRepository,
+    private val userRepository: UserRepository,
 ) {
 
     fun create(userRequest: UserRequest): UserResponse {
@@ -28,7 +29,20 @@ class UserService(
     }
 
     fun findById(id: String): UserResponse {
-        val entity = userRepository.findById(id).orElseThrow { IllegalArgumentException("User not found") };
+        val entity = this.findUserById(id);
         return entity.toDomain().toResponse();
+    }
+
+    fun update(id: String, userRequest: UserRequest): UserResponse {
+        val entity = this.findUserById(id).merger(userRequest);
+        return userRepository.save(entity).toDomain().toResponse();
+    }
+
+    fun delete(id: String) {
+        userRepository.delete(findUserById(id));
+    }
+
+    private fun findUserById(id: String): UserEntity {
+        return userRepository.findById(id).orElseThrow { IllegalArgumentException("User not found") };
     }
 }

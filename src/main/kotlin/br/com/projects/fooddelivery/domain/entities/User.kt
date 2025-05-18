@@ -63,5 +63,4 @@ class User(
             activate = isActive
         );
     }
-
 }

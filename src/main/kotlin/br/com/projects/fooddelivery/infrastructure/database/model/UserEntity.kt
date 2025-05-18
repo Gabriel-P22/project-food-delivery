@@ -1,5 +1,6 @@
 package br.com.projects.fooddelivery.infrastructure.database.model
 
+import br.com.projects.fooddelivery.application.dto.UserRequest
 import br.com.projects.fooddelivery.domain.entities.User
 import br.com.projects.fooddelivery.infrastructure.enums.UserType
 import jakarta.persistence.*
@@ -13,24 +14,36 @@ class UserEntity(
     val id: String = UUID.randomUUID().toString(),
 
     @Column
-    val name: String,
+    var name: String,
 
     @Column
-    val secondName: String,
+    var secondName: String,
 
     @Column
-    val email: String,
+    var email: String,
 
     @Column
-    val password: String,
+    var password: String,
 
     @Column
-    val activate: Boolean,
+    var activate: Boolean,
 
     @Enumerated(EnumType.STRING)
     @Column
-    val type: UserType,
+    var type: UserType,
 ) {
+
+    fun merger(userRequest: UserRequest): UserEntity {
+        userRequest.apply {
+            if (name.isNotBlank()) this@UserEntity.name = name
+            if (secondName.isNotBlank()) this@UserEntity.secondName = secondName
+            if (email.isNotBlank()) this@UserEntity.email = email
+            if (password.isNotBlank()) this@UserEntity.password = password
+            if (type.name.isNotBlank()) this@UserEntity.type = type
+        }
+
+        return this;
+    }
 
     fun toDomain(): User {
         return User(
