@@ -10,8 +10,9 @@ import java.util.*
 @Table(name = "USERS")
 class UserEntity(
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column
-    val id: String = UUID.randomUUID().toString(),
+    val id: String?,
 
     @Column
     var name: String,

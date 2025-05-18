@@ -55,6 +55,7 @@ class User(
 
     fun toModel(): UserEntity {
         return UserEntity(
+            id = null,
             name = name,
             secondName = secondName,
             email = email,
