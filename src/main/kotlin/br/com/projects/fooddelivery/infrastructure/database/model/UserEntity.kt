@@ -24,6 +24,9 @@ class UserEntity(
     @Column
     val password: String,
 
+    @Column
+    val activate: Boolean,
+
     @Enumerated(EnumType.STRING)
     @Column
     val type: UserType,
@@ -36,7 +39,8 @@ class UserEntity(
             secondName,
             email,
             password,
-            type
+            type,
+            activate
         );
     }
 

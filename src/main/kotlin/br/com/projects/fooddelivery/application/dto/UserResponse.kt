@@ -7,5 +7,6 @@ data class UserResponse(
     val id: UUID?,
     val name: String,
     val secondName: String,
-    val type: UserType
+    val type: UserType,
+    val isActivate: Boolean
 )

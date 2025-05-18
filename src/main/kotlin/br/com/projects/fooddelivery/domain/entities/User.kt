@@ -11,7 +11,8 @@ class User(
     private var secondName: String,
     private var email: String,
     private var password: String,
-    private var type: UserType
+    private var type: UserType,
+    private var isActive: Boolean = false
 ) {
 
     init {
@@ -33,13 +34,23 @@ class User(
         return true;
     }
 
+    fun active() {
+        this.validation();
+        this.isActive = true;
+    }
+
+    fun deactivate() {
+        this.validation();
+        this.isActive = false;
+    }
+
     fun addIdentifier(id: UUID) {
         this.validation()
         this.id = id;
     }
 
     fun toResponse(): UserResponse {
-        return UserResponse(id, name, secondName, type);
+        return UserResponse(id, name, secondName, type, isActive);
     }
 
     fun toModel(): UserEntity {
@@ -48,7 +59,8 @@ class User(
             secondName = secondName,
             email = email,
             password = password,
-            type= type
+            type= type,
+            activate = isActive
         );
     }
 
