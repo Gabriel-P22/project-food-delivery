@@ -15,21 +15,26 @@ class User(
 ) {
 
     init {
-        if (!validation()) {
-            throw IllegalArgumentException("Invalid fields");
-        }
+        this.validation();
     }
 
     private fun validation(): Boolean {
-        return name.isNotBlank() &&
+        val condition = name.isNotBlank() &&
                 secondName.isNotBlank() &&
                 email.isNotBlank() &&
                 password.isNotBlank() &&
                 name.isNotBlank() &&
-                UserType.isValid(type.name)
+                UserType.isValid(type.name);
+
+        if (!condition) {
+            throw IllegalArgumentException("Invalid param")
+        }
+
+        return true;
     }
 
     fun addIdentifier(id: UUID) {
+        this.validation()
         this.id = id;
     }
 
