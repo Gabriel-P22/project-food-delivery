@@ -2,7 +2,7 @@ package br.com.projects.fooddelivery.application.controller
 
 import br.com.projects.fooddelivery.application.dto.UserRequest
 import br.com.projects.fooddelivery.application.dto.UserResponse
-import br.com.projects.fooddelivery.application.service.UserService
+import br.com.projects.fooddelivery.domain.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping

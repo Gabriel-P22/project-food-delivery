@@ -1,4 +1,4 @@
-package br.com.projects.fooddelivery.application.service
+package br.com.projects.fooddelivery.domain.service
 
 import br.com.projects.fooddelivery.application.dto.UserRequest
 import br.com.projects.fooddelivery.application.dto.UserResponse
@@ -6,7 +6,6 @@ import br.com.projects.fooddelivery.domain.entities.User
 import br.com.projects.fooddelivery.infrastructure.database.model.UserEntity
 import br.com.projects.fooddelivery.infrastructure.database.repository.UserRepository
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class UserService(

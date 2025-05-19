@@ -6,7 +6,7 @@ import br.com.projects.fooddelivery.infrastructure.enums.UserType
 import java.util.UUID
 
 class User(
-    private var id: UUID? = null,
+    private var id: String? = null,
     private var name: String,
     private var secondName: String,
     private var email: String,
@@ -35,17 +35,14 @@ class User(
     }
 
     fun active() {
-        this.validation();
         this.isActive = true;
     }
 
     fun deactivate() {
-        this.validation();
         this.isActive = false;
     }
 
-    fun addIdentifier(id: UUID) {
-        this.validation()
+    fun addIdentifier(id: String) {
         this.id = id;
     }
 
