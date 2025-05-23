@@ -20,7 +20,7 @@ class UserEntity(
     @Column
     var secondName: String,
 
-    @Column
+    @Column(unique = true, nullable = false)
     var email: String,
 
     @Column

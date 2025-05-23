@@ -5,6 +5,8 @@ import br.com.projects.fooddelivery.application.dto.UserResponse
 import br.com.projects.fooddelivery.domain.entities.User
 import br.com.projects.fooddelivery.infrastructure.database.model.UserEntity
 import br.com.projects.fooddelivery.infrastructure.database.repository.UserRepository
+import br.com.projects.fooddelivery.infrastructure.exception.ConflictException
+import br.com.projects.fooddelivery.infrastructure.exception.NotFoundException
 import org.springframework.stereotype.Service
 
 @Service
@@ -13,6 +15,11 @@ class UserService(
 ) {
 
     fun create(userRequest: UserRequest): UserResponse {
+
+        if (userRepository.existsByEmail(userRequest.email)) {
+            throw ConflictException("Use another email");
+        }
+
         val user = User(
             name = userRequest.name,
             secondName = userRequest.secondName,
@@ -42,6 +49,6 @@ class UserService(
     }
 
     private fun findUserById(id: String): UserEntity {
-        return userRepository.findById(id).orElseThrow { IllegalArgumentException("User not found") };
+        return userRepository.findById(id).orElseThrow { NotFoundException("User not found") };
     }
 }
