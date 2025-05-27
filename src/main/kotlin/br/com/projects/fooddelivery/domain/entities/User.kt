@@ -1,5 +1,7 @@
 package br.com.projects.fooddelivery.domain.entities
 
+import br.com.projects.fooddelivery.application.dto.AddressRequest
+import br.com.projects.fooddelivery.application.dto.UserRequest
 import br.com.projects.fooddelivery.application.dto.UserResponse
 import br.com.projects.fooddelivery.domain.vo.Address
 import br.com.projects.fooddelivery.infrastructure.database.model.UserEntity
@@ -17,6 +19,18 @@ class User(
     private var address: Address?,
     private var wallet: Wallet?
 ) {
+
+    constructor(request: UserRequest) : this(
+        id = null,
+        name = request.name,
+        secondName = request.secondName,
+        email = request.email,
+        password = request.password,
+        type = request.type,
+        isActive = false,
+        address = Address(request.address),
+        wallet = Wallet(null)
+    )
 
     init {
         this.validation();
@@ -37,21 +51,11 @@ class User(
         return true;
     }
 
-    fun getWallet() = this.wallet;
-
-    fun addIdentifier(id: String?) {
-        this.id = id;
-    }
-
     fun toResponse(): UserResponse {
         val address = address?.toResponse();
         val wallet = wallet?.toResponse();
 
         return UserResponse(id, name, secondName, type, isActive, address, wallet);
-    }
-
-    fun addWallet(wallet: Wallet?) {
-        this.wallet = wallet;
     }
 
     fun toModel(): UserEntity {

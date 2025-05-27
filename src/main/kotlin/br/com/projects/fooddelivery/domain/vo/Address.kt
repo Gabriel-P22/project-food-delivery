@@ -1,5 +1,6 @@
 package br.com.projects.fooddelivery.domain.vo
 
+import br.com.projects.fooddelivery.application.dto.AddressRequest
 import br.com.projects.fooddelivery.application.dto.AddressResponse
 import br.com.projects.fooddelivery.infrastructure.database.model.AddressEntity
 import br.com.projects.fooddelivery.infrastructure.enums.AddressType
@@ -12,6 +13,16 @@ class Address(
     private var zipcode: String,
     private var type: AddressType
 ) {
+
+    constructor(address: AddressRequest) : this(
+        street = address.street,
+        number = address.number,
+        city = address.city,
+        state = address.state,
+        zipcode = address.zipcode,
+        type = address.type
+    )
+
 
     init {
         this.validation();

@@ -23,27 +23,7 @@ class UserService(
             throw ConflictException("Use another email");
         }
 
-        val address = Address(
-            userRequest.address.street,
-            userRequest.address.number,
-            userRequest.address.city,
-            userRequest.address.state,
-            userRequest.address.zipcode,
-            userRequest.address.type
-        );
-
-        val wallet = Wallet(
-            null
-        );
-
-        val user = User(
-            name = userRequest.name,
-            secondName = userRequest.secondName,
-            email = userRequest.email,
-            password = userRequest.password,
-            type = userRequest.type,
-            address = address,
-            wallet = wallet);
+        val user = User(userRequest);
 
         val entity = userRepository.save(user.toModel());
 
@@ -51,11 +31,7 @@ class UserService(
     }
 
     fun findById(id: String): UserResponse {
-        val entity = this.findUserById(id);
-        val domain = entity.toDomain();
-        val response = domain.toResponse();
-
-        return response
+        return  this.findUserById(id).toDomain().toResponse();
     }
 
     fun update(id: String, userRequest: UserRequest): UserResponse {
