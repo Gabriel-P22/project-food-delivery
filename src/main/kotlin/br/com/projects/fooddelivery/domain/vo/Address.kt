@@ -2,7 +2,6 @@ package br.com.projects.fooddelivery.domain.vo
 
 import br.com.projects.fooddelivery.application.dto.AddressResponse
 import br.com.projects.fooddelivery.infrastructure.database.model.AddressEntity
-import br.com.projects.fooddelivery.infrastructure.database.model.UserEntity
 import br.com.projects.fooddelivery.infrastructure.enums.AddressType
 
 class Address(

@@ -9,6 +9,12 @@ Table users {
   updatedAt timestamp [default: `now()`]
 }
 
+Table wallet {
+  id uuid [pk]
+  user_id uuid [ref: > users.id]
+  amount decimal
+}
+
 Table addresses {
   id uuid [pk]
   street varchar
@@ -22,22 +28,45 @@ Table addresses {
   updatedAt timestamp [default: `now()`]
 }
 
-Table wallets {
+Table payment_method {
   id uuid [pk]
   user_id uuid [ref: > users.id]
-  amount decimal(10,2)
-  currency varchar [default: `'BRL'`]
+  balance decimal(10,2)
+  type varchar [default: `'money', 'wallet'`]
   createdAt timestamp [default: `now()`]
   updatedAt timestamp [default: `now()`]
 }
 
 Table transactions {
   id uuid [pk]
-  wallet_id uuid [ref: > wallets.id]
-  address_id uuid [ref: > users.address_id]
-  type varchar // money, wallet
+  payment_method_id uuid [ref: > payment_method.id]
+  type varchar [default: `'debit', 'recharge'`] // debit (buy product) || credit (recharge)
   amount decimal(10,2)
   description text
   createdAt timestamp [default: `now()`]
   updatedAt timestamp [default: `now()`]
+}
+
+Table orders {
+  id uuid [pk]
+  user_id uuid [ref: > users.id]
+  transction_id uuid [ref: > transactions.id]
+  products_id array [ref: > products.id]
+}
+
+Table products {
+  id uuid [pk]
+  owner_id uuid [ref: > stores.id]
+  name varchar
+  desc varchar
+  image_path varchar
+  value decimal(10, 2)
+}
+
+Table stores {
+  id uuid [pk]
+  user_id uuid [ref: > users.id]
+  name varchar
+  desc varchar
+  image_path varchar
 }
