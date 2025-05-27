@@ -6,7 +6,6 @@ import br.com.projects.fooddelivery.infrastructure.exception.DomainValidationExc
 
 class Wallet(
     private val id: String?,
-    private var userId: String?,
     private var amount: Double = 0.0
 ) {
 
@@ -27,7 +26,7 @@ class Wallet(
     fun toEntity(): WalletEntity {
         return WalletEntity(
             id,
-            userId,
+            null,
             amount
         )
     }

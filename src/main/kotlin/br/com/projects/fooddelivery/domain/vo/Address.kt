@@ -36,6 +36,7 @@ class Address(
     fun toEntity(): AddressEntity {
         return AddressEntity(
             null,
+            null,
             street,
             number,
             city,

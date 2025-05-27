@@ -1,72 +1,72 @@
-Table users {
-  id uuid [pk]
-  name varchar
-  email varchar [unique]
-  password varchar
-  type varchar // CUSTOMER, BUSINESS, ADMIN
-  address_id uuid [ref: > addresses.id]
-  createdAt timestamp [default: `now()`]
-  updatedAt timestamp [default: `now()`]
-}
+    Table users {
+      id uuid [pk]
+      name varchar
+      email varchar [unique]
+      password varchar
+      type varchar // CUSTOMER, BUSINESS, ADMIN
+      address_id uuid [ref: > addresses.id]
+      createdAt timestamp [default: `now()`]
+      updatedAt timestamp [default: `now()`]
+    }
 
-Table wallet {
-  id uuid [pk]
-  user_id uuid [ref: > users.id]
-  amount decimal
-}
+    Table wallet {
+      id uuid [pk]
+      user_id uuid [ref: > users.id]
+      amount decimal
+    }
 
-Table addresses {
-  id uuid [pk]
-  street varchar
-  number varchar
-  city varchar
-  state varchar
-  zipcode varchar
-  type varchar
-  complement varchar
-  createdAt timestamp [default: `now()`]
-  updatedAt timestamp [default: `now()`]
-}
+    Table addresses {
+      id uuid [pk]
+      street varchar
+      number varchar
+      city varchar
+      state varchar
+      zipcode varchar
+      type varchar
+      complement varchar
+      createdAt timestamp [default: `now()`]
+      updatedAt timestamp [default: `now()`]
+    }
 
-Table payment_method {
-  id uuid [pk]
-  user_id uuid [ref: > users.id]
-  balance decimal(10,2)
-  type varchar [default: `'money', 'wallet'`]
-  createdAt timestamp [default: `now()`]
-  updatedAt timestamp [default: `now()`]
-}
+    Table payment_method {
+      id uuid [pk]
+      user_id uuid [ref: > users.id]
+      balance decimal(10,2)
+      type varchar [default: `'money', 'wallet'`]
+      createdAt timestamp [default: `now()`]
+      updatedAt timestamp [default: `now()`]
+    }
 
-Table transactions {
-  id uuid [pk]
-  payment_method_id uuid [ref: > payment_method.id]
-  type varchar [default: `'debit', 'recharge'`] // debit (buy product) || credit (recharge)
-  amount decimal(10,2)
-  description text
-  createdAt timestamp [default: `now()`]
-  updatedAt timestamp [default: `now()`]
-}
+    Table transactions {
+      id uuid [pk]
+      payment_method_id uuid [ref: > payment_method.id]
+      type varchar [default: `'debit', 'recharge'`] // debit (buy product) || credit (recharge)
+      amount decimal(10,2)
+      description text
+      createdAt timestamp [default: `now()`]
+      updatedAt timestamp [default: `now()`]
+    }
 
-Table orders {
-  id uuid [pk]
-  user_id uuid [ref: > users.id]
-  transction_id uuid [ref: > transactions.id]
-  products_id array [ref: > products.id]
-}
+    Table orders {
+      id uuid [pk]
+      user_id uuid [ref: > users.id]
+      transction_id uuid [ref: > transactions.id]
+      products_id array [ref: > products.id]
+    }
 
-Table products {
-  id uuid [pk]
-  owner_id uuid [ref: > stores.id]
-  name varchar
-  desc varchar
-  image_path varchar
-  value decimal(10, 2)
-}
+    Table products {
+      id uuid [pk]
+      owner_id uuid [ref: > stores.id]
+      name varchar
+      desc varchar
+      image_path varchar
+      value decimal(10, 2)
+    }
 
-Table stores {
-  id uuid [pk]
-  user_id uuid [ref: > users.id]
-  name varchar
-  desc varchar
-  image_path varchar
-}
+    Table stores {
+      id uuid [pk]
+      user_id uuid [ref: > users.id]
+      name varchar
+      desc varchar
+      image_path varchar
+    }

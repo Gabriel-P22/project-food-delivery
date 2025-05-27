@@ -32,6 +32,10 @@ class UserService(
             userRequest.address.type
         );
 
+        val wallet = Wallet(
+            null
+        );
+
         val user = User(
             name = userRequest.name,
             secondName = userRequest.secondName,
@@ -39,24 +43,19 @@ class UserService(
             password = userRequest.password,
             type = userRequest.type,
             address = address,
-            wallet = null);
+            wallet = wallet);
 
         val entity = userRepository.save(user.toModel());
-
-        entity.changeWallet(WalletEntity(
-            null,
-            entity.id,
-            0.0
-        ))
-
-        userRepository.save(entity);
 
         return entity.toDomain().toResponse();
     }
 
     fun findById(id: String): UserResponse {
         val entity = this.findUserById(id);
-        return entity.toDomain().toResponse();
+        val domain = entity.toDomain();
+        val response = domain.toResponse();
+
+        return response
     }
 
     fun update(id: String, userRequest: UserRequest): UserResponse {

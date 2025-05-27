@@ -68,8 +68,10 @@ class User(
         );
 
         val address = address?.toEntity();
+        val wallet = wallet?.toEntity();
 
         userEntity.changeAddress(address);
+        userEntity.changeWallet(wallet);
 
         return userEntity;
     }

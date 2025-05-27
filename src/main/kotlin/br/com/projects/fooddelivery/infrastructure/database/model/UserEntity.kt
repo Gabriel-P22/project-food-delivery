@@ -47,7 +47,7 @@ class UserEntity(
     var address: AddressEntity?,
 
     @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
-    @JoinColumn(name = "wallet_id")
+    @JoinColumn(name = "wallet_id", referencedColumnName = "id")
     var wallet: WalletEntity?,
 ) {
 
@@ -59,6 +59,7 @@ class UserEntity(
             if (password.isNotBlank()) this@UserEntity.password = password
             if (type.name.isNotBlank()) this@UserEntity.type = type
             this@UserEntity.address = AddressEntity(
+                null,
                 null,
                 address.street,
                 address.number,
@@ -90,7 +91,6 @@ class UserEntity(
             type,
             activate,
             address?.toDomain(),
-            wallet?.toDomain()
-            );
+            wallet?.toDomain());
     }
 }
