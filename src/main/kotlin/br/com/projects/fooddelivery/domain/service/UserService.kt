@@ -3,8 +3,10 @@ package br.com.projects.fooddelivery.domain.service
 import br.com.projects.fooddelivery.application.dto.UserRequest
 import br.com.projects.fooddelivery.application.dto.UserResponse
 import br.com.projects.fooddelivery.domain.entities.User
+import br.com.projects.fooddelivery.domain.entities.Wallet
 import br.com.projects.fooddelivery.domain.vo.Address
 import br.com.projects.fooddelivery.infrastructure.database.model.UserEntity
+import br.com.projects.fooddelivery.infrastructure.database.model.WalletEntity
 import br.com.projects.fooddelivery.infrastructure.database.repository.UserRepository
 import br.com.projects.fooddelivery.infrastructure.exception.ConflictException
 import br.com.projects.fooddelivery.infrastructure.exception.NotFoundException
@@ -28,7 +30,7 @@ class UserService(
             userRequest.address.state,
             userRequest.address.zipcode,
             userRequest.address.type
-        )
+        );
 
         val user = User(
             name = userRequest.name,
@@ -36,13 +38,20 @@ class UserService(
             email = userRequest.email,
             password = userRequest.password,
             type = userRequest.type,
-            address = address);
+            address = address,
+            wallet = null);
 
         val entity = userRepository.save(user.toModel());
 
-        entity.id?.let { user.addIdentifier(it) };
+        entity.changeWallet(WalletEntity(
+            null,
+            entity.id,
+            0.0
+        ))
 
-        return user.toResponse();
+        userRepository.save(entity);
+
+        return entity.toDomain().toResponse();
     }
 
     fun findById(id: String): UserResponse {

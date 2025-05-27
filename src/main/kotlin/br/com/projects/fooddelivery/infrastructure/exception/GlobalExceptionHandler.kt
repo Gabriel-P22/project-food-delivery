@@ -43,5 +43,15 @@ class GlobalExceptionHandler {
         )
     }
 
+    @ExceptionHandler(DomainValidationException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun domainValidation(exception: Exception, request: HttpServletRequest): ErrorView {
+        return ErrorView(
+            status = 400,
+            error = HttpStatus.BAD_REQUEST.name,
+            message = exception.message,
+            path = request.servletPath
+        )
+    }
 
 }

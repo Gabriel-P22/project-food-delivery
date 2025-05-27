@@ -3,6 +3,7 @@ package br.com.projects.fooddelivery.domain.entities
 import br.com.projects.fooddelivery.application.dto.UserResponse
 import br.com.projects.fooddelivery.domain.vo.Address
 import br.com.projects.fooddelivery.infrastructure.database.model.UserEntity
+import br.com.projects.fooddelivery.infrastructure.database.model.WalletEntity
 import br.com.projects.fooddelivery.infrastructure.enums.UserType
 
 class User(
@@ -13,7 +14,8 @@ class User(
     private var password: String,
     private var type: UserType,
     private var isActive: Boolean = false,
-    private var address: Address?
+    private var address: Address?,
+    private var wallet: Wallet?
 ) {
 
     init {
@@ -35,21 +37,21 @@ class User(
         return true;
     }
 
-    fun active() {
-        this.isActive = true;
-    }
+    fun getWallet() = this.wallet;
 
-    fun deactivate() {
-        this.isActive = false;
-    }
-
-    fun addIdentifier(id: String) {
+    fun addIdentifier(id: String?) {
         this.id = id;
     }
 
     fun toResponse(): UserResponse {
         val address = address?.toResponse();
-        return UserResponse(id, name, secondName, type, isActive, address);
+        val wallet = wallet?.toResponse();
+
+        return UserResponse(id, name, secondName, type, isActive, address, wallet);
+    }
+
+    fun addWallet(wallet: Wallet?) {
+        this.wallet = wallet;
     }
 
     fun toModel(): UserEntity {
@@ -62,6 +64,7 @@ class User(
             type= type,
             activate = isActive,
             address = null,
+            wallet = null
         );
 
         val address = address?.toEntity();

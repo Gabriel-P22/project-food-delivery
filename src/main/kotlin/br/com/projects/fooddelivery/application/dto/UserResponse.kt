@@ -8,5 +8,6 @@ data class UserResponse(
     val secondName: String,
     val type: UserType,
     val isActivate: Boolean,
-    val address: AddressResponse?
+    val address: AddressResponse?,
+    val wallet: WalletResponse?
 )

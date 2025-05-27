@@ -45,6 +45,10 @@ class UserEntity(
     @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "address_id")
     var address: AddressEntity?,
+
+    @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JoinColumn(name = "wallet_id")
+    var wallet: WalletEntity?,
 ) {
 
     fun merger(userRequest: UserRequest): UserEntity {
@@ -72,6 +76,10 @@ class UserEntity(
         this.address = address;
     }
 
+    fun changeWallet(wallet: WalletEntity?) {
+        this.wallet = wallet;
+    }
+
     fun toDomain(): User {
         return User(
             id,
@@ -81,8 +89,8 @@ class UserEntity(
             password,
             type,
             activate,
-            address?.toDomain()
-        );
+            address?.toDomain(),
+            wallet?.toDomain()
+            );
     }
-
 }
