@@ -61,7 +61,7 @@ class UserEntity(
                 address.city,
                 address.state,
                 address.zipcode,
-                address.type
+                address.type,
             )
         }
 

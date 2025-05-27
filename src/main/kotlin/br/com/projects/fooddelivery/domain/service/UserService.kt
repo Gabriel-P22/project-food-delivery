@@ -21,20 +21,22 @@ class UserService(
             throw ConflictException("Use another email");
         }
 
+        val address = Address(
+            userRequest.address.street,
+            userRequest.address.number,
+            userRequest.address.city,
+            userRequest.address.state,
+            userRequest.address.zipcode,
+            userRequest.address.type
+        )
+
         val user = User(
             name = userRequest.name,
             secondName = userRequest.secondName,
             email = userRequest.email,
             password = userRequest.password,
             type = userRequest.type,
-            address = Address(
-                userRequest.address.street,
-                userRequest.address.number,
-                userRequest.address.city,
-                userRequest.address.state,
-                userRequest.address.zipcode,
-                userRequest.address.type
-            ));
+            address = address);
 
         val entity = userRepository.save(user.toModel());
 

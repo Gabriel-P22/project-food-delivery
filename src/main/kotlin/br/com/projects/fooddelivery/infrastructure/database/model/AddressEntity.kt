@@ -1,6 +1,8 @@
 package br.com.projects.fooddelivery.infrastructure.database.model
 
 
+import br.com.projects.fooddelivery.application.dto.AddressRequest
+import br.com.projects.fooddelivery.application.dto.UserRequest
 import br.com.projects.fooddelivery.domain.vo.Address
 import br.com.projects.fooddelivery.infrastructure.enums.AddressType
 import jakarta.persistence.Column

@@ -64,7 +64,7 @@ class User(
             address = null,
         );
 
-        val address = address?.toEntity(userEntity);
+        val address = address?.toEntity();
 
         userEntity.changeAddress(address);
 
