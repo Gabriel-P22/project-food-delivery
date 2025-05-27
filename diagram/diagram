@@ -1,0 +1,42 @@
+Table users {
+  id uuid [pk]
+  name varchar
+  email varchar [unique]
+  password varchar
+  type varchar // CUSTOMER, BUSINESS, ADMIN
+  createdAt timestamp [default: `now()`]
+  updatedAt timestamp [default: `now()`]
+}
+
+Table addresses {
+  id uuid [pk]
+  user_id uuid [ref: > users.id]
+  street varchar
+  number varchar
+  city varchar
+  state varchar
+  zipcode varchar
+  type varchar // e.g., home, work
+  createdAt timestamp [default: `now()`]
+  updatedAt timestamp [default: `now()`]
+}
+
+Table wallets {
+  id uuid [pk]
+  user_id uuid [ref: > users.id]
+  amount decimal(10,2)
+  currency varchar [default: `'BRL'`]
+  createdAt timestamp [default: `now()`]
+  updatedAt timestamp [default: `now()`]
+}
+
+Table transactions {
+  id uuid [pk]
+  wallet_id uuid [ref: > wallets.id]
+  address_id uuid [ref: > addresses.id]
+  type varchar // credit, debit
+  amount decimal(10,2)
+  description text
+  createdAt timestamp [default: `now()`]
+  updatedAt timestamp [default: `now()`]
+}

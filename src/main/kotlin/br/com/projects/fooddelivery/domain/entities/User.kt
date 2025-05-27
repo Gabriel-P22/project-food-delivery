@@ -1,9 +1,9 @@
 package br.com.projects.fooddelivery.domain.entities
 
 import br.com.projects.fooddelivery.application.dto.UserResponse
+import br.com.projects.fooddelivery.domain.vo.Address
 import br.com.projects.fooddelivery.infrastructure.database.model.UserEntity
 import br.com.projects.fooddelivery.infrastructure.enums.UserType
-import java.util.UUID
 
 class User(
     private var id: String? = null,
@@ -12,7 +12,8 @@ class User(
     private var email: String,
     private var password: String,
     private var type: UserType,
-    private var isActive: Boolean = false
+    private var isActive: Boolean = false,
+    private var address: Address?
 ) {
 
     init {
@@ -47,18 +48,26 @@ class User(
     }
 
     fun toResponse(): UserResponse {
-        return UserResponse(id, name, secondName, type, isActive);
+        val address = address?.toResponse();
+        return UserResponse(id, name, secondName, type, isActive, address);
     }
 
     fun toModel(): UserEntity {
-        return UserEntity(
+        val userEntity = UserEntity(
             id = null,
             name = name,
             secondName = secondName,
             email = email,
             password = password,
             type= type,
-            activate = isActive
+            activate = isActive,
+            address = null,
         );
+
+        val address = address?.toEntity(userEntity);
+
+        userEntity.changeAddress(address);
+
+        return userEntity;
     }
 }

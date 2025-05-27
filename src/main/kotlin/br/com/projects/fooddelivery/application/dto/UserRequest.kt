@@ -7,5 +7,6 @@ data class UserRequest(
     val secondName: String,
     val email: String,
     val password: String,
-    val type: UserType
+    val type: UserType,
+    val address: AddressRequest
 )
