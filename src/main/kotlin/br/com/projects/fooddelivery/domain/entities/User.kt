@@ -1,11 +1,9 @@
 package br.com.projects.fooddelivery.domain.entities
 
-import br.com.projects.fooddelivery.application.dto.AddressRequest
 import br.com.projects.fooddelivery.application.dto.UserRequest
 import br.com.projects.fooddelivery.application.dto.UserResponse
 import br.com.projects.fooddelivery.domain.vo.Address
 import br.com.projects.fooddelivery.infrastructure.database.model.UserEntity
-import br.com.projects.fooddelivery.infrastructure.database.model.WalletEntity
 import br.com.projects.fooddelivery.infrastructure.enums.UserType
 
 class User(

@@ -51,28 +51,6 @@ class UserEntity(
     var wallet: WalletEntity?,
 ) {
 
-    fun merger(userRequest: UserRequest): UserEntity {
-        userRequest.apply {
-            if (name.isNotBlank()) this@UserEntity.name = name
-            if (secondName.isNotBlank()) this@UserEntity.secondName = secondName
-            if (email.isNotBlank()) this@UserEntity.email = email
-            if (password.isNotBlank()) this@UserEntity.password = password
-            if (type.name.isNotBlank()) this@UserEntity.type = type
-            this@UserEntity.address = AddressEntity(
-                null,
-                null,
-                address.street,
-                address.number,
-                address.city,
-                address.state,
-                address.zipcode,
-                address.type,
-            )
-        }
-
-        return this;
-    }
-
     fun changeAddress(address: AddressEntity?) {
         this.address = address;
     }

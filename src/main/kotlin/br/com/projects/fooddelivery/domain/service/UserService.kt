@@ -5,12 +5,15 @@ import br.com.projects.fooddelivery.application.dto.UserResponse
 import br.com.projects.fooddelivery.domain.entities.User
 import br.com.projects.fooddelivery.domain.entities.Wallet
 import br.com.projects.fooddelivery.domain.vo.Address
+import br.com.projects.fooddelivery.infrastructure.database.model.AddressEntity
 import br.com.projects.fooddelivery.infrastructure.database.model.UserEntity
 import br.com.projects.fooddelivery.infrastructure.database.model.WalletEntity
 import br.com.projects.fooddelivery.infrastructure.database.repository.UserRepository
+import br.com.projects.fooddelivery.infrastructure.enums.AddressType
 import br.com.projects.fooddelivery.infrastructure.exception.ConflictException
 import br.com.projects.fooddelivery.infrastructure.exception.NotFoundException
 import org.springframework.stereotype.Service
+import java.util.Objects
 
 @Service
 class UserService(
@@ -35,8 +38,22 @@ class UserService(
     }
 
     fun update(id: String, userRequest: UserRequest): UserResponse {
-        val entity = this.findUserById(id).merger(userRequest);
-        return userRepository.save(entity).toDomain().toResponse();
+        val entity = this.findUserById(id);
+
+        userRequest.apply {
+            entity.name = name;
+            entity.secondName = secondName
+            entity.email = email
+            entity.password = password
+            entity.type = type
+            entity.address = Address(
+                userRequest.address
+            ).toEntity();
+        }
+
+        userRepository.save(entity);
+
+        return entity.toDomain().toResponse();
     }
 
     fun delete(id: String) {

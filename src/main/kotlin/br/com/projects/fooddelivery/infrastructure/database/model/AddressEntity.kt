@@ -46,7 +46,6 @@ class AddressEntity(
     @Enumerated(EnumType.STRING)
     private var type: AddressType,
 ) {
-
     fun toDomain(): Address {
         return Address(
             street,
