@@ -4,19 +4,20 @@ Table users {
   email varchar [unique]
   password varchar
   type varchar // CUSTOMER, BUSINESS, ADMIN
+  address_id uuid [ref: > addresses.id]
   createdAt timestamp [default: `now()`]
   updatedAt timestamp [default: `now()`]
 }
 
 Table addresses {
   id uuid [pk]
-  user_id uuid [ref: > users.id]
   street varchar
   number varchar
   city varchar
   state varchar
   zipcode varchar
-  type varchar // e.g., home, work
+  type varchar
+  complement varchar
   createdAt timestamp [default: `now()`]
   updatedAt timestamp [default: `now()`]
 }
@@ -33,8 +34,8 @@ Table wallets {
 Table transactions {
   id uuid [pk]
   wallet_id uuid [ref: > wallets.id]
-  address_id uuid [ref: > addresses.id]
-  type varchar // credit, debit
+  address_id uuid [ref: > users.address_id]
+  type varchar // money, wallet
   amount decimal(10,2)
   description text
   createdAt timestamp [default: `now()`]
